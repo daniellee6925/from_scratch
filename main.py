@@ -29,3 +29,21 @@ def get_items(first_n: int = None):
         return all_todos[:first_n]
     else:
         return all_todos
+
+
+@api.post("/todos")
+def create_todo(todo: dict):
+    next_todo_id = max(todo["todo_id"] for todo in all_todos) + 1
+
+    new_todo = {
+        "todo_id": next_todo_id,
+        "todo_name": todo["todo_name"],
+        "todo_descritpion": todo["todo_descritpion"],
+    }
+
+    all_todos.append(new_todo)
+
+    return new_todo
+
+
+#python -m fastapi dev main.py
